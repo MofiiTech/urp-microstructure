@@ -1,0 +1,487 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- common.css -->
+      <style>* {-webkit-tap-highlight-color: rgba(0,0,0,0);}html {-webkit-text-size-adjust: none;}body {font-family: -apple-system, Helvetica, Arial, sans-serif;margin: 0;padding: 20px;color: #333;word-wrap: break-word;}h1, h2, h3, h4, h5, h6 {line-height: 1.1;}img {max-width: 100% !important;height: auto;}blockquote {margin: 0;padding: 0 15px;color: #777;border-left: 4px solid #ddd;}hr {background-color: #ddd;border: 0;height: 1px;margin: 15px 0;}code {font-family: Menlo, Consolas, 'Ubuntu Mono', Monaco, 'source-code-pro', monospace;line-height: 1.4;margin: 0;padding: 0.2em 0;font-size: 90%;background-color: rgba(0,0,0,0.04);border-radius: 3px;}pre > code {margin: 0;padding: 0;font-size: 100%;word-break: normal;background: transparent;border: 0;}ol {list-style-type: decimal;}ol ol, ul ol {list-style-type: lower-latin;}ol ol ol, ul ol ol, ul ul ol, ol ul ol {list-style-type: lower-roman;}table {border-spacing: 0;border-collapse: collapse;margin-top: 0;margin-bottom: 16px;}table th {font-weight: bold;}table th, table td {padding: 6px 13px;border: 1px solid #ddd;}table tr {border-top: 1px solid #ccc;}table tr:nth-child(even) {background-color: #f8f8f8;}input[type="checkbox"] {cursor: default;margin-right: 0.5em;font-size: 13px;}.task-list-item {list-style-type: none;}.task-list-item+.task-list-item {margin-top: 3px;}.task-list-item input {float: left;margin: 0.3em 1em 0.25em -1.6em;vertical-align: middle;}#tag-field {margin: 8px 2px 10px;}#tag-field .tag {display: inline-block;background: #cadff3;border-radius: 4px;padding: 1px 8px;color: black;font-size: 12px;margin-right: 10px;line-height: 1.4;}</style>
+      <!-- ace-static.css -->
+      <style>.ace_static_highlight {white-space: pre-wrap;}.ace_static_highlight .ace_gutter {width: 2em;text-align: right;padding: 0 3px 0 0;margin-right: 3px;}.ace_static_highlight.ace_show_gutter > .ace_line {padding-left: 2.6em;}.ace_static_highlight .ace_line {position: relative;}.ace_static_highlight .ace_gutter-cell {-moz-user-select: -moz-none;-khtml-user-select: none;-webkit-user-select: none;user-select: none;top: 0;bottom: 0;left: 0;position: absolute;}.ace_static_highlight .ace_gutter-cell:before {content: counter(ace_line, decimal);counter-increment: ace_line;}.ace_static_highlight {counter-reset: ace_line;}</style>
+      <style>.ace-chrome .ace_gutter {background: #ebebeb;color: #333;overflow : hidden;}.ace-chrome .ace_print-margin {width: 1px;background: #e8e8e8;}.ace-chrome {background-color: #FFFFFF;color: black;}.ace-chrome .ace_cursor {color: black;}.ace-chrome .ace_invisible {color: rgb(191, 191, 191);}.ace-chrome .ace_constant.ace_buildin {color: rgb(88, 72, 246);}.ace-chrome .ace_constant.ace_language {color: rgb(88, 92, 246);}.ace-chrome .ace_constant.ace_library {color: rgb(6, 150, 14);}.ace-chrome .ace_invalid {background-color: rgb(153, 0, 0);color: white;}.ace-chrome .ace_fold {}.ace-chrome .ace_support.ace_function {color: rgb(60, 76, 114);}.ace-chrome .ace_support.ace_constant {color: rgb(6, 150, 14);}.ace-chrome .ace_support.ace_type,.ace-chrome .ace_support.ace_class.ace-chrome .ace_support.ace_other {color: rgb(109, 121, 222);}.ace-chrome .ace_variable.ace_parameter {font-style:italic;color:#FD971F;}.ace-chrome .ace_keyword.ace_operator {color: rgb(104, 118, 135);}.ace-chrome .ace_comment {color: #236e24;}.ace-chrome .ace_comment.ace_doc {color: #236e24;}.ace-chrome .ace_comment.ace_doc.ace_tag {color: #236e24;}.ace-chrome .ace_constant.ace_numeric {color: rgb(0, 0, 205);}.ace-chrome .ace_variable {color: rgb(49, 132, 149);}.ace-chrome .ace_xml-pe {color: rgb(104, 104, 91);}.ace-chrome .ace_entity.ace_name.ace_function {color: #0000A2;}.ace-chrome .ace_heading {color: rgb(12, 7, 255);}.ace-chrome .ace_list {color:rgb(185, 6, 144);}.ace-chrome .ace_marker-layer .ace_selection {background: rgb(181, 213, 255);}.ace-chrome .ace_marker-layer .ace_step {background: rgb(252, 255, 0);}.ace-chrome .ace_marker-layer .ace_stack {background: rgb(164, 229, 101);}.ace-chrome .ace_marker-layer .ace_bracket {margin: -1px 0 0 -1px;border: 1px solid rgb(192, 192, 192);}.ace-chrome .ace_marker-layer .ace_active-line {background: rgba(0, 0, 0, 0.07);}.ace-chrome .ace_gutter-active-line {background-color : #dcdcdc;}.ace-chrome .ace_marker-layer .ace_selected-word {background: rgb(250, 250, 255);border: 1px solid rgb(200, 200, 250);}.ace-chrome .ace_storage,.ace-chrome .ace_keyword,.ace-chrome .ace_meta.ace_tag {color: rgb(147, 15, 128);}.ace-chrome .ace_string.ace_regex {color: rgb(255, 0, 0)}.ace-chrome .ace_string {color: #1A1AA6;}.ace-chrome .ace_entity.ace_other.ace_attribute-name {color: #994409;}.ace-chrome .ace_indent-guide {background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;}</style>
+      <!-- export.css -->
+      <style>
+        body{margin:0 auto;max-width:800px;line-height:1.4}
+        #nav{margin:5px 0 10px;font-size:15px}
+        #titlearea{border-bottom:1px solid #ccc;font-size:17px;padding:10px 0;}
+        #contentarea{font-size:15px;margin:16px 0}
+        .cell{outline:0;min-height:20px;margin:5px 0;padding:5px 0;}
+        .code-cell{font-family:Menlo,Consolas,'Ubuntu Mono',Monaco,'source-code-pro',monospace;font-size:12px;}
+        .latex-cell{white-space:pre-wrap;}
+      </style>
+      <!-- User CSS -->
+      <style> img {display: block;margin: 0 auto;}a {color: #4285F4;text-decoration: none;}table {margin-left: auto;margin-right: auto;}blue {color: #4285F4;}grey {color: #A9A9A9;}me {color: #1DA1F2;}high {color: #F29B38;}.text-cell {font-size: 15px;}.code-cell {font-size: 12px;}.markdown-cell {font-size: 15px;}.latex-cell {font-size: 15px;}</style>
+    </head>
+    <body>
+      
+      <div id="titlearea">
+        <h2>Deep Learning for Microstructure Characterization</h2>
+      </div>
+      <div id="contentarea"><div class="cell markdown-cell"><h2>Classification by Texture Statistics (with CNN)</h2>
+<h3><a href="texture-01.html">Texture 01</a></h3>
+<p>Haralick features + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.9198380699952313</td>
+<td style="text-align:center">0.7359320345866613</td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.919980676334983</td>
+<td style="text-align:center">0.72596523406393</td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.9230418569658252</td>
+<td style="text-align:center">0.7573795284669791</td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.9198380699952313</td>
+<td style="text-align:center">0.7359320345866613</td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.024787923056529593</td>
+<td style="text-align:center">0.00040650319381676516</td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.08580703022293824</td>
+<td style="text-align:center">0.07536933158411212</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-02.html">Texture 02</a></h3>
+<p>Histogram of oriented gradients + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.6500666125548639</td>
+<td style="text-align:center">0.6374635590234284</td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.6067103196158364</td>
+<td style="text-align:center">0.6086426129266695</td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.6484893882664267</td>
+<td style="text-align:center">0.6142120410067003</td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.6500666125548639</td>
+<td style="text-align:center">0.6374635590234284</td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.09183358515497157</td>
+<td style="text-align:center">-0.07249086044552944</td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.09030664751591952</td>
+<td style="text-align:center">0.08499492708862799</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-03.html">Texture 03</a></h3>
+<p>Local binary patterns + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.8558834950188163</td>
+<td style="text-align:center">0.7319186146820527</td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.8558240390669895</td>
+<td style="text-align:center">0.7139438532167693</td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.8646212185709936</td>
+<td style="text-align:center">0.7336919334490464</td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.8558834950188163</td>
+<td style="text-align:center">0.7319186146820527</td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.017046763170513613</td>
+<td style="text-align:center">-0.03404166253183623</td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.0848309886314826</td>
+<td style="text-align:center">0.08187509010636171</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-04.html">Texture 04</a></h3>
+<p>Hu moments + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.6872244151642145</td>
+<td style="text-align:center">0.5696081510357173</td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.6791824998472157</td>
+<td style="text-align:center">0.5276857358266999</td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.6888323935381546</td>
+<td style="text-align:center">0.5231574940470246</td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.6872244151642145</td>
+<td style="text-align:center">0.5696081510357173</td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.28641878982527114</td>
+<td style="text-align:center">-0.0783909847079498</td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.10892606975863876</td>
+<td style="text-align:center">0.08515758900385965</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-05.html">Texture 05</a></h3>
+<p>Zernike moments + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.3457544617666889</td>
+<td style="text-align:center">0.30018032723373983</td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.32607570809443903</td>
+<td style="text-align:center">0.2500578395823073</td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.3366299064850352</td>
+<td style="text-align:center">0.259770810845031</td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.3457544617666889</td>
+<td style="text-align:center">0.30018032723373983</td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.1356274899328167</td>
+<td style="text-align:center">-0.07701541685910998</td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.09508250929391113</td>
+<td style="text-align:center">0.08691251667117599</td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-06.html">Texture 06</a></h3>
+<p>VGG-19 + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.7770720036350146</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.7751924756522041</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.800882852291046</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.7770720036350146</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.14894232927312429</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.10333497929231883</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-07.html">Texture 07</a></h3>
+<p>Inception + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.668183502798894</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.6617421913176297</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.6738476308228144</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.668183502798894</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-20.038872334753798</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">1.569091554429228</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-08.html">Texture 08</a></h3>
+<p>( All ) + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.6267309705611883</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.6018828709890645</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.7190563440769389</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.6267309705611883</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.4163007671969451</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.11324568974838425</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-09.html">Texture 09</a></h3>
+<p>( Haralick + LBP + VGG-19) + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.8414600872192981</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.8407782613065315</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.859939167044536</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.8414600872192981</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.1442008262538943</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.102571098575888</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h3><a href="texture-10.html">Texture 10</a></h3>
+<p>( Haralick + LBP ) + Random Forest / SVM</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Measures</th>
+<th style="text-align:center">RF</th>
+<th style="text-align:center">SVM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accuracy</td>
+<td style="text-align:center">0.952958372907424</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">F1 Score</td>
+<td style="text-align:center">0.9528952729697237</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Precision</td>
+<td style="text-align:center">0.9585193029643115</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Recall</td>
+<td style="text-align:center">0.952958372907424</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">R2 Score</td>
+<td style="text-align:center">-0.05836646944032542</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">Mean Square Error</td>
+<td style="text-align:center">0.08656449436548289</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<h2>Deep Nueral Network with Pre-trained CNN</h2>
+<h3><a href="vgg-5fold.html">NN with VGG-19 (5 fold validation)</a></h3>
+<p><strong>Fine-tuning</strong>: trainable from <code>block5_conv1</code><br>
+<strong>Classifier</strong>: 256 (<code>relu</code>) + 5 (<code>softmax</code>)<br>
+<strong>Training</strong>: 150 with 5-fold validation</p>
+<p>Problem:</p>
+<ol>
+<li>Oscillating loss / acc =&gt; learning rate with decay / momentum / optimizer?</li>
+<li>Avg acc in fold 3 did not reach 90%, while acc in fold 4 reach 97% =&gt; Outliers?</li>
+</ol>
+<p>A <a href="nn-vgg19-5fold.html">second test</a>.</p>
+<h3><a href="nn-vgg19-1.html">NN with VGG-19</a></h3>
+<ul>
+<li>Learning rate with proper decay rate, fewer oscillations and stablizes around 96%</li>
+<li>In <a href="nn-vgg19-2.html">another try</a> with 200 epoch, accuracy stablizes around 93% with few oscillations</li>
+</ul>
+<h3><a href="nn-resnet50.html">NN with ResNet50</a></h3>
+<ul>
+<li>Without fine-tuning</li>
+<li>Poor generalization, and many oscillations on first attempt</li>
+<li>Could be better after adjustments</li>
+</ul>
+</div></div>
+      <script></script>
+    </body>
+    </html>
+  
